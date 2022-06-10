@@ -6,6 +6,6 @@ namespace SpendingApp.ModelsDTO
     {
         [Display(Name = "Category")]
         [Required]
-        string Name { get; set; }
+        public string Name { get; set; }
     }
 }
