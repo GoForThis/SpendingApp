@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SpendingApp;
+using SpendingApp.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>
 
 builder.Services.AddScoped<Seeder>();
 
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
@@ -28,7 +30,7 @@ if (app.Environment.IsDevelopment())
 seeder.Seed();
 
 app.UseHttpsRedirection();
-
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
