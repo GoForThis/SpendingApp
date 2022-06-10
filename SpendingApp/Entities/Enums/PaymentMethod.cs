@@ -1,6 +1,8 @@
 ﻿namespace SpendingApp.Entities.Enums
 {
-    public class PaymentMethod
+    public enum PaymentMethod
     {
+        Card = 1,
+        Cash = 2
     }
 }
