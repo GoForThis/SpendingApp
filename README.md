@@ -1,4 +1,6 @@
+
 #Projekt - Aplikacja do zarządzania wydatkami
+
 ## Spis treści
 * [Ogólne](#ogolne)
 * [Technologie](#technologie)
