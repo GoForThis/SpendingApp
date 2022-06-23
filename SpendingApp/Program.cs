@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using SpendingApp;
 using SpendingApp.Middleware;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using SpendingApp.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,27 @@ builder.Services.AddDbContext<AppDbContext>
 builder.Services.AddScoped<Seeder>();
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
+// Authorization
+var authorizationSettings = new AuthorizationSettings();
+builder.Configuration.GetSection("Authentication").Bind(authorizationSettings);
+builder.Services.AddSingleton(authorizationSettings);
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = "Bearer";
+    option.DefaultScheme = "Bearer";
+    option.DefaultChallengeScheme = "Bearer";
+}).AddJwtBearer(option =>
+{
+    option.RequireHttpsMetadata = false;
+    option.SaveToken = true;
+    option.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = authorizationSettings.JwtIssuer,
+        ValidAudience = authorizationSettings.JwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authorizationSettings.JwtKey)),
+    };
+});
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
