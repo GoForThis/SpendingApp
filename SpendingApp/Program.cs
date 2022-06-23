@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using SpendingApp;
 using SpendingApp.Middleware;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using SpendingApp.Authorization;
+using SpendingApp.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +44,8 @@ builder.Services.AddAuthentication(option =>
     };
 });
 
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
 var app = builder.Build();
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<Seeder>();
@@ -56,7 +60,7 @@ seeder.Seed();
 app.UseHttpsRedirection();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthorization();
-
+app.UseAuthentication();
 app.MapControllers();
 
 app.Run();
