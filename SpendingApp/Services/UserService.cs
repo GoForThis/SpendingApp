@@ -10,7 +10,12 @@ using SpendingApp.Exceptions;
 using SpendingApp.ModelsDTO;
 namespace SpendingApp.Services
 {
-    public class UserService
+    public interface IUserService
+    {
+        void RegisterUser(RegisterDTO dto);
+        string GenerateJwt(LoginDTO dto);
+    }
+    public class UserService : IUserService
     {
         private readonly AppDbContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
