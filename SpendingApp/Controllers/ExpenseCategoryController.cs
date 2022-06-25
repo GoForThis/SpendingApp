@@ -6,7 +6,7 @@ using SpendingApp.Services;
 namespace SpendingApp.Controllers
 {
     [Authorize]
-    [Route("api/category")]
+    [Route("api/categories")]
     [ApiController]
     public class ExpenseCategoryController : ControllerBase
     {
