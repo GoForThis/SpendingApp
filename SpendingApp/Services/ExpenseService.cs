@@ -18,10 +18,10 @@ namespace SpendingApp.Services
     public class ExpenseService : IExpenseService
     {
         private readonly AppDbContext _context;
-        private readonly UserContextService _contextService;
+        private readonly IUserContextService _contextService;
         private readonly IMapper _mapper;
 
-        public ExpenseService(AppDbContext context, UserContextService contextService, IMapper mapper)
+        public ExpenseService(AppDbContext context, IUserContextService contextService, IMapper mapper)
         {
             _context = context;
             _contextService = contextService;
