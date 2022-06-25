@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using SpendingApp;
 using SpendingApp.Middleware;
+using System.Reflection;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using SpendingApp.Authorization;
@@ -50,6 +51,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddScoped<IExpenseService, ExpenseService>();
 builder.Services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
